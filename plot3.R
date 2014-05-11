@@ -1,0 +1,10 @@
+require(sqldf)
+tmpsql <- tmpsql <- "select * from file where Date = '2/2/2007' or Date = '1/2/2007'"
+d <- read.csv2.sql("household_power_consumption.txt",tmpsql)
+d$DateTime <- strptime(paste(d$Date, d$Time), format="%d/%m/%Y %H:%M:%S")
+png(file="plot3.png",width=480,height=480)
+plot(d$DateTime,d[,7],type="l",ylab = "Energy sub metering",xlab="")
+points(d$DateTime,d[,8],col='red',type='l')
+points(d$DateTime,d[,9],col='blue',type='l')
+legend("topright",col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),pch="-")
+dev.off()
